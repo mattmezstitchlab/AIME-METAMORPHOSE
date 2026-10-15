@@ -1,0 +1,17 @@
+{
+  "name": "aime-metamorphose",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Studio de fragments, grille métamorphique et analyse HTML documentée",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "build": "node -e \"console.log('Static output ready: public/')\""
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
