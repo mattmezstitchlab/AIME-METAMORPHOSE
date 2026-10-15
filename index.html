@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="#f5f5f2"/>
+  <meta name="description" content="AIME MÉTAMORPHOSE — une URL, une grille, des transformations, des preuves."/>
+  <link rel="stylesheet" href="/app.css"/>
+  <title>AIME MÉTAMORPHOSE — Atelier des fragments</title>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="AIME MÉTAMORPHOSE — Accueil">
+      <span class="logomark"><i></i><i></i><i></i><i></i></span>
+      <span class="brandname">AIME <span>MÉTAMORPHOSE</span></span>
+    </a>
+    <div class="head-center">ATELIER / POINT ZÉRO <span class="top-dot">●</span> V0.1</div>
+    <div class="head-right"><span class="eyebrow">LABORATOIRE VISUEL</span><button id="exportBtn" class="button ghost" type="button">Exporter <span>↗</span></button></div>
+  </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="eyebrow side-label">01 — SOURCE</div>
+        <h1>Tout part<br/><em>d'un point.</em></h1>
+        <p class="lede">Collez une URL. Observez sa structure se propager dans la grille. Recadrez, composez, examinez.</p>
+        <form id="scanForm" class="scan-form">
+          <label class="field-caption" for="siteUrl">ADRESSE DU SITE</label>
+          <div class="url-field"><span>↗</span><input type="url" id="siteUrl" autocomplete="url" placeholder="https://votre-site.fr" required aria-label="URL publique HTTPS"/></div>
+          <button class="button black full" id="scanBtn" type="submit"><span class="scan-label">Propager l'URL</span><span>↗</span></button>
+        </form>
+        <button class="text-button" id="demoBtn" type="button">↳ Explorer la collection de démonstration</button>
+        <div class="sidebar-divider"></div>
+        <div class="eyebrow side-label">02 — PROCESSUS</div>
+        <div class="process-list">
+          <div class="process active"><span class="step-number">01</span><span><strong>Absorber</strong><small>Source et pages</small></span><b>●</b></div>
+          <div class="process"><span class="step-number">02</span><span><strong>Décomposer</strong><small>Découvrir les fragments</small></span><b>○</b></div>
+          <div class="process"><span class="step-number">03</span><span><strong>Métamorphoser</strong><small>Composer librement</small></span><b>○</b></div>
+          <div class="process"><span class="step-number">04</span><span><strong>Vérifier</strong><small>Documenter les constats</small></span><b>○</b></div>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="eyebrow side-label">03 — DESIGN SYSTEM</div>
+        <div id="themes" class="themes" role="group" aria-label="Design system">
+          <button class="theme-choice selected" data-theme="aime" type="button"><span class="theme-dot dot-rose"></span>AIME Signature<span>✓</span></button>
+          <button class="theme-choice" data-theme="mono" type="button"><span class="theme-dot dot-mono"></span>Minimal<span></span></button>
+          <button class="theme-choice" data-theme="botanical" type="button"><span class="theme-dot dot-green"></span>Botanique<span></span></button>
+        </div>
+        <div class="side-footer"><span class="live-led"></span><span id="sourceStatus">Mode démonstration · données locales</span></div>
+      </div>
+    </aside>
+    <main class="workspace">
+      <div class="workspace-header">
+        <div>
+          <div class="eyebrow" id="boardEyebrow">COLLECTION / 01</div>
+          <h2 id="boardTitle">Cabinet de curiosités<span class="pink-point">.</span></h2>
+          <p id="boardSubtitle">Des fragments d'interfaces, à contempler et recomposer.</p>
+        </div>
+        <div class="workspace-actions">
+          <button class="iconbtn" id="resetLayout" type="button" title="Réinitialiser la composition">↺</button>
+          <button class="iconbtn" id="addFragment" type="button" title="Ajouter un fragment libre">＋</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="view-tabs" role="tablist" aria-label="Mode de travail">
+          <button class="tab current" data-mode="explore" type="button">Explorer</button>
+          <button class="tab" data-mode="compose" type="button">Composer</button>
+          <button class="tab" data-mode="prove" type="button">Prouver <span id="findingCount"></span></button>
+        </div>
+        <div class="toolbar-right">
+          <span class="count" id="fragmentCount">0 FRAGMENTS</span>
+          <span class="splitter">/</span>
+          <select id="layoutMode" aria-label="Disposition"><option value="editorial">Éditoriale</option><option value="regular">Régulière</option><option value="immersive">Immersive</option></select>
+        </div>
+      </div>
+      <div id="infoBanner" class="info-banner" hidden></div>
+      <div id="board" class="board" aria-live="polite"></div>
+      <div id="proofs" class="proofs" hidden></div>
+      <div class="workspace-foot"><span>GLISSER POUR RÉORGANISER · CLIQUER POUR ÉDITER · DOUBLE-CLIQUER POUR EXPLORER</span><span id="saveStatus">SAUVEGARDE LOCALE</span></div>
+    </main>
+    <aside class="inspector">
+      <div class="inspector-header"><span class="eyebrow">INSPECTEUR</span><span class="inspector-state">● CONTEXTUEL</span></div>
+      <div id="inspectorBody" class="inspector-body"></div>
+      <div class="inspector-bottom"><span>UNE SOURCE · PLUSIEURS FORMES</span><span>✳</span></div>
+    </aside>
+  </div>
+  <div id="viewer" class="viewer" hidden>
+    <div class="viewer-top"><div class="viewer-label"><b id="viewerTitle">Exploration</b><span id="viewerUrl"></span></div><div class="viewer-actions"><button class="button white" id="viewerExternal">Ouvrir le site ↗</button><button class="close-button" id="viewerClose" aria-label="Fermer">×</button></div></div>
+    <div class="viewer-note">L'intégration peut être bloquée par le site d'origine. Le bouton « Ouvrir le site » reste disponible.</div>
+    <iframe id="viewerFrame" title="Exploration du site" sandbox="allow-scripts allow-same-origin allow-forms" referrerpolicy="no-referrer"></iframe>
+  </div>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
